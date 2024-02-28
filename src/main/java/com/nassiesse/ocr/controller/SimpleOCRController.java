@@ -10,6 +10,7 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.ImageType;
 import org.apache.pdfbox.rendering.PDFRenderer;
 import org.apache.pdfbox.text.PDFTextStripper;
+import org.apache.pdfbox.Loader;
 import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,9 +32,8 @@ public class SimpleOCRController {
     public @ResponseBody ResponseEntity<String> 
 					extractTextFromPDFFile(@RequestParam("file") MultipartFile file) {
 		try {
-			
 			// Load file into PDFBox class
-			PDDocument document = PDDocument.load(file.getBytes());
+			PDDocument document = Loader.loadPDF(file.getBytes());
 			PDFTextStripper stripper = new PDFTextStripper();
 			String strippedText = stripper.getText(document);
 			
